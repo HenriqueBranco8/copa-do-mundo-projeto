@@ -1,13 +1,80 @@
 import fastify from "fastify"
-import { request } from "http"
+import cors from '@fastify/cors'
 
 const server = fastify( {logger: true} )
+
+server.register(cors,{
+  origin: ["http://localhost:3636/artilheiros", "http://localhost:3636/grupos"],
+} )
+
+const grupos = [
+  {
+    id: 1,
+    grupo: "A",
+    selecoes: ["México", "Coreia do Sul", "Tchéquia", "África do Sul"]
+  },
+  {
+    id: 2,
+    grupo: "B",
+    selecoes: ["Canadá", "Suíça", "Bósnia e Herzegovina", "Catar"]
+  },
+  {
+    id: 3,
+    grupo: "C",
+    selecoes: ["Brasil", "Marrocos", "Escócia", "Haiti"]
+  },
+  {
+    id: 4,
+    grupo: "D",
+    selecoes: ["Estados Unidos", "Austrália", "Paraguai", "Turquia"]
+  },
+  {
+    id: 5,
+    grupo: "E",
+    selecoes: ["Alemanha", "Costa do Marfim", "Equador", "Curaçao"]
+  },
+  {
+    id: 6,
+    grupo: "F",
+    selecoes: ["Holanda", "Japão", "Suécia", "Tunísia"]
+  },
+  {
+    id: 7,
+    grupo: "G",
+    selecoes: ["Egito", "Irã", "Bélgica", "Nova Zelândia"]
+  },
+  {
+    id: 8,
+    grupo: "H",
+    selecoes: ["Espanha", "Uruguai", "Cabo Verde", "Arábia Saudita"]
+  },
+  {
+    id: 9,
+    grupo: "I",
+    selecoes: ["França", "Noruega", "Senegal", "Iraque"]
+  },
+  {
+    id: 10,
+    grupo: "J",
+    selecoes: ["Argentina", "Áustria", "Argélia", "Jordânia"]
+  },
+  {
+    id: 11,
+    grupo: "K",
+    selecoes: ["Colômbia", "Portugal", "RD Congo", "Uzbequistão"]
+  },
+  {
+    id: 12,
+    grupo: "L",
+    selecoes: ["Inglaterra", "Gana", "Panamá", "Croácia"]
+  }
+]
 
 server.get('/grupos', async(request, response) => {
     response.type('aplication/json').code(200)
 
     return [
-        {grupo: 'A', Times: 'Brasil, México, Holando, Romenia'}
+        {grupos}
     ]
 })
 
@@ -163,7 +230,7 @@ server.get<{Params: RouteParams}>('/artilheiros/:id', async(request, response) =
 
     if(!selecao){
         response.type('aplication/json').code(404)
-        return {message: "Driver Not Found"}
+        return {message: "Seleção Not Found"}
     } else {
         response.type('aplication/json').code(200)
         return {selecao}
